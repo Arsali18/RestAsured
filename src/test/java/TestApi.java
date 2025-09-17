@@ -1,14 +1,34 @@
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.concurrent.TimeUnit;
+
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.equalTo;
+import static org.testng.Assert.assertTrue;
 
 
 public class TestApi {
+
+    Response response;
+
+    @BeforeMethod
+    public void setUrl(){
+        RestAssured.baseURI="https://reqres.in/api";
+    }
+
+    @AfterMethod
+    public void statusCode(){
+
+
+        if(response!= null){
+            response=null;
+        }
+    }
 
      String idObjeect;
 
@@ -27,19 +47,34 @@ public class TestApi {
     @Test
     public void getMethod() {
 
-        Response response = RestAssured.get("https://reqres.in/api/users?page=2");
-        int statusCode = response.getStatusCode();
+        response = given()
+                .basePath("/users")
+                .queryParam("page",2)
+                .when()
+                .get();
+        response.prettyPrint();
+        System.out.println("Status Code GET: "+response.getStatusCode());
+        Assert.assertEquals(response.getStatusCode(),200);
+        long responseTimeSec = response.getTimeIn(TimeUnit.SECONDS);
+        assertTrue(responseTimeSec < 1, "Response time lebih dari 2 detik");
+    }
 
-        System.out.println("Status Code: " + statusCode);
-        System.out.println("Waktu Respon : " + response.getTime());
-        System.out.println("Respon Status: " + response.getStatusLine());
-        System.out.println(response.getHeader("cotent-type"));
-        System.out.println(response.prettyPrint());
+    @Test
+    public void getUser() {
 
-
-        System.out.println();
-        Assert.assertEquals(statusCode, 200);
-
+        response = given()
+                .basePath("/users")
+                .queryParam("page",2)
+                .queryParam("per_page",5)
+                .header("accept","application/json")
+                .header("x-api-key","reqres-free-v1")
+                .when()
+                .get();
+        response.prettyPrint();
+        System.out.println("Status Code GET: "+response.getStatusCode());
+        Assert.assertEquals(response.getStatusCode(),200);
+        long responseTimeSec = response.getTimeIn(TimeUnit.SECONDS);
+        assertTrue(responseTimeSec < 3, "Response time lebih dari 2 detik");
     }
 
 
@@ -103,10 +138,7 @@ public class TestApi {
         System.out.printf("baseUri : %s",url);
     }
 
-//    public static void main(String[] args) {
-//        String id = passID(); // langsung panggil karena static
-//        System.out.println("ID yang didapat: " + id);
-//    }
+
 
 
 

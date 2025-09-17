@@ -2,23 +2,14 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.*;
-import org.testng.internal.annotations.IBeforeTest;
-
 import java.util.List;
-
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
-import static java.lang.Math.log;
+
 
 public class TestAuthorization {
     private String token;
     private int id;
     Response response;
-
-
-
-
-
 
     @BeforeMethod
     public void url(){
@@ -34,53 +25,28 @@ public class TestAuthorization {
         }
     }
 
-   @Test(priority = 1)
-   public void createToken(){
+    @Test(priority = 1)
+    public void createToken(){
 
-       String bodyReqToken = "{\n" +
-               "    \"username\" : \"admin\",\n" +
-               "    \"password\" : \"password123\"\n" +
-               "}";
+        String bodyReqToken = "{\n" +
+                "    \"username\" : \"admin\",\n" +
+                "    \"password\" : \"password123\"\n" +
+                "}";
 
-       Response response =given()
-               .basePath("/auth")
-               .header("Content-Type","application/json")
-                       .body(bodyReqToken)
-       .when()
-               .post();
+        Response response =given()
+                .basePath("/auth")
+                .header("Content-Type","application/json")
+                .body(bodyReqToken)
+                .when()
+                .post();
 
-       response.prettyPrint();
-       token = response.jsonPath().getString("token");
-       System.out.println("Token: " + token);
-       Assert.assertNotNull(token);
-   }
-
-   @Test(priority = 7)
-   public void getBookingIds(){
-
-        response=given().
-                basePath("/booking")
-        .when()
-                .get();
-       List<String> bookingIds = response.jsonPath().getList("bookingid");
-       Assert.assertEquals(response.getStatusCode(), 200);
-       Assert.assertTrue(bookingIds.size() > 1, "Jumlah kurang dari 1");
-       response.prettyPrint();
-
-   }
-
-   @Test(priority = 5)
-    public void getBooking(){
-        response = given()
-                .basePath("/booking/{id}")
-                .pathParams("id", id)
-        .when()
-                .get();
-                    response.prettyPrint();
-                    Assert.assertEquals(response.getStatusCode(),200);
-   }
-
-
+        response.prettyPrint();
+        token = response.jsonPath().getString("token");
+        System.out.println("Token: " + token);
+        Assert.assertNotNull(token);
+        Assert.assertEquals(response.getStatusCode(),200);
+        System.out.println("Status Code POST: "+response.getStatusCode());
+    }
 
 
    @Test (priority = 2)
@@ -106,6 +72,7 @@ public class TestAuthorization {
 
        response.prettyPrint();
        id=response.jsonPath().getInt("bookingid");
+       System.out.println("Status Code POST: "+response.getStatusCode());
        Assert.assertEquals(response.getStatusCode(),200);
 
 
@@ -134,7 +101,7 @@ public class TestAuthorization {
                 .body(bodyPut)
         .when()
                 .put();
-        System.out.println(token);
+        response.prettyPrint();
         System.out.println("Status Code PUT: "+response.getStatusCode());
         Assert.assertEquals(response.getStatusCode(),200);
     }
@@ -161,6 +128,20 @@ public class TestAuthorization {
         Assert.assertEquals(response.getStatusCode(),200);
     }
 
+    @Test(priority = 5)
+    public void getBooking(){
+        response = given()
+                .basePath("/booking/{id}")
+                .pathParams("id", id)
+                .when()
+                .get();
+        response.prettyPrint();
+        System.out.println("Status Code GET: "+response.getStatusCode());
+        Assert.assertEquals(response.getStatusCode(),200);
+    }
+
+
+
     @Test(priority = 6)
     public void deleteBooking(){
         response = given()
@@ -176,6 +157,23 @@ public class TestAuthorization {
         Assert.assertEquals(response.getStatusCode(),201);
     }
 
+    @Test(priority = 7)
+    public void getBookingIds(){
+
+        response=given().
+                basePath("/booking")
+                .when()
+                .get();
+        List<String> bookingIds = response.jsonPath().getList("bookingid");
+        Assert.assertEquals(response.getStatusCode(), 200);
+        Assert.assertTrue(bookingIds.size() > 1, "Jumlah kurang dari 1");
+        System.out.println("Status Code GET: "+response.getStatusCode());
+        response.prettyPrint();
+
+    }
+
+
+
     @Test(priority = 8)
     public void ping(){
         response = given()
@@ -186,12 +184,6 @@ public class TestAuthorization {
         System.out.println("Status Code GET: "+response.getStatusCode());
         Assert.assertEquals(response.getStatusCode(),201);
     }
-
-
-
-
-
-
 
    }
 
