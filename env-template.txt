@@ -1,0 +1,5 @@
+BASE_URI=https://restful-booker.herokuapp.com
+
+USERNAME=<USERNAME>
+PASSWORD=<PASSWORD
+USER_ID_=<USER_ID>
