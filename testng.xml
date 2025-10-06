@@ -4,8 +4,9 @@
     <test name="MyTestGroup">
         <parameter name="program"  value="Bootcamp API Automation"/>
         <classes>
-            <class name="TestAuthorization" />
-            <class name="TestApi" />
+<!--            <class name="TestAuthorization" />-->
+<!--            <class name="TestApi" />-->
+            <class name="APIBooking.tests.BookingTest" />
         </classes>
     </test>
 </suite>

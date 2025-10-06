@@ -6,36 +6,36 @@ import static io.restassured.RestAssured.given;
 
 public class BookingApi {
 
-    public static Response createBooking(String body) {
+    public static <T> Response createBooking(T payload) {
          return given()
                 .basePath("/booking")
                 .header("Content-Type", "application/json")
-                .body(body)
+                .body(payload)
                 .when()
                 .post();
 
     }
 
-    public static Response updateBooking(int id, String token, String body) {
+    public static <T> Response updateBooking(int id, String token, T payload) {
         return given()
                 .basePath("/booking/{id}")
                 .pathParam("id", id)
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .header("Cookie", "token=" + token)
-                .body(body)
+                .body(payload)
                 .when()
                 .put();
     }
 
-    public static Response partialUpdateBooking(int id, String token, String body) {
+    public static <T> Response partialUpdateBooking(int id, String token, T payload) {
         return given()
                 .basePath("/booking/{id}")
                 .pathParam("id", id)
                 .header("Content-Type", "application/json")
                 .header("Accept", "application/json")
                 .header("Cookie", "token=" + token)
-                .body(body)
+                .body(payload)
                 .when()
                 .patch();
     }
@@ -47,6 +47,7 @@ public class BookingApi {
                 .when()
                 .get();
     }
+
 
     public static Response deleteBooking(int id, String token) {
         return given()

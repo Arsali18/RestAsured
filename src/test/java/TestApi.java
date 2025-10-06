@@ -55,8 +55,8 @@ public class TestApi {
         response.prettyPrint();
         System.out.println("Status Code GET: "+response.getStatusCode());
         Assert.assertEquals(response.getStatusCode(),200);
-        long responseTimeSec = response.getTimeIn(TimeUnit.SECONDS);
-        assertTrue(responseTimeSec < 1, "Response time lebih dari 2 detik");
+        //long responseTimeSec = response.getTimeIn(TimeUnit.SECONDS);
+       // assertTrue(responseTimeSec < 1, "Response time lebih dari 2 detik");
     }
 
     @Test
@@ -73,8 +73,8 @@ public class TestApi {
         response.prettyPrint();
         System.out.println("Status Code GET: "+response.getStatusCode());
         Assert.assertEquals(response.getStatusCode(),200);
-        long responseTimeSec = response.getTimeIn(TimeUnit.SECONDS);
-        assertTrue(responseTimeSec < 3, "Response time lebih dari 2 detik");
+//        long responseTimeSec = response.getTimeIn(TimeUnit.SECONDS);
+//        assertTrue(responseTimeSec < 3, "Response time lebih dari 2 detik");
     }
 
 

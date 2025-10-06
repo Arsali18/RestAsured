@@ -1,9 +1,17 @@
 package APIBooking.utils;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.cdimascio.dotenv.Dotenv;
+import io.restassured.response.Response;
+
+import java.io.File;
 
 public class Helper {
     public static Dotenv dotenv;
+    private static ObjectMapper objectMapper, mapper = new ObjectMapper();
+    private static final String DATA_PATH ="src\\test\\java\\Resources\\";
+
     public static Dotenv loaDotenv(){
         if (dotenv == null) {
             dotenv = Dotenv.load();
@@ -14,4 +22,39 @@ public class Helper {
     public static String getKey(String key){
         return loaDotenv().get(key);
     }
+
+
+
+    public static <T> T convertResponseToObject(Response response, Class<T> clazz){
+        // ObjectMapper objectMapper = new ObjectMapper();
+        // ResponseAddBooks responseAddBooks = objectMapper.readValue(response.asString(), ResponseAddBooks.class);
+        objectMapper = new ObjectMapper();
+        try {
+            return Helper.objectMapper.readValue(response.asString(), clazz);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to convert response to class: " + clazz.getSimpleName(), e);
+        }
+    }
+
+    /**
+     * Get specific payload from JSON file contain multiple data
+     * meaning <T> return type is generic
+     * @param filePath
+     */
+    public static <T> T findByUseCase(String filePath, String usecase, Class<T> clazz) {
+        try {
+            JsonNode rootNode = mapper.readTree(new File(DATA_PATH + filePath));
+            for (JsonNode node : rootNode) {
+                if (node.get("usecase").asText().equals(usecase)) {
+                    JsonNode payloadNode = node.get("payload");
+                    return mapper.treeToValue(payloadNode, clazz);
+                }
+            }
+            throw new RuntimeException("Usecase not found: " + usecase);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get payload from file: " + filePath, e);
+        }
+    }
 }
+
+
