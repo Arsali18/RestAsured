@@ -3,6 +3,10 @@
 Project ini adalah implementasi **API Automation Testing** menggunakan **Java**, **Rest Assured**, dan **TestNG**.
 Tujuan project ini adalah untuk menguji endpoint API secara otomatis, memastikan fungsionalitas berjalan sesuai ekspektasi, serta mempermudah proses regression testing.
 
+
+## Link Vidio
+https://drive.google.com/file/d/1-nNtb2EzBCxAeCA6pIdZxX1uCBlip8KM/view?usp=drive_link
+
 ## 🚀 Teknologi yang Digunakan
 
 - **Java** 17
