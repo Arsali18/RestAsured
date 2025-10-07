@@ -6,6 +6,7 @@
         <classes>
 <!--            <class name="TestAuthorization" />-->
 <!--            <class name="TestApi" />-->
+            <class name="APIBooking.tests.IntegrationTest"/>
             <class name="APIBooking.tests.BookingTest" />
         </classes>
     </test>

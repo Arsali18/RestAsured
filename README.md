@@ -9,6 +9,7 @@ Tujuan project ini adalah untuk menguji endpoint API secara otomatis, memastikan
 - **Rest Assured** (library untuk HTTP request/response testing)
 - **TestNG** (framework untuk test management & report)
 - **Maven** (dependency & build management)
+- **Jackson** (library untuk serialisasi dan deserialisasi JSON (konversi antara Java object dan JSON))
 
 
 
@@ -29,30 +30,36 @@ Tujuan project ini adalah untuk menguji endpoint API secara otomatis, memastikan
 
    ```xml
    <dependencies>
-       <!-- Rest Assured -->
-       <dependency>
-           <groupId>io.rest-assured</groupId>
-           <artifactId>rest-assured</artifactId>
-           <version>5.3.0</version>
-           <scope>test</scope>
-       </dependency>
+        <!-- https://mvnrepository.com/artifact/io.rest-assured/rest-assured -->
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>5.5.6</version>
+            <scope>test</scope>
+        </dependency>
 
-       <!-- TestNG -->
-       <dependency>
-           <groupId>org.testng</groupId>
-           <artifactId>testng</artifactId>
-           <version>7.7.0</version>
-           <scope>test</scope>
-       </dependency>
+        <!-- https://mvnrepository.com/artifact/io.github.cdimascio/dotenv-java -->
+        <dependency>
+            <groupId>io.github.cdimascio</groupId>
+            <artifactId>dotenv-java</artifactId>
+            <version>3.2.0</version>
+        </dependency>
 
-       <!-- JSON Path (opsional) -->
-       <dependency>
-           <groupId>io.rest-assured</groupId>
-           <artifactId>json-path</artifactId>
-           <version>5.3.0</version>
-           <scope>test</scope>
-       </dependency>
-   </dependencies>
+        <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>7.11.0</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.20.0</version>
+        </dependency>
+    </dependencies>
    ```
 
 ## ▶️ Menjalankan Test
